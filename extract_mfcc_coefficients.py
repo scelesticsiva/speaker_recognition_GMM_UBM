@@ -7,11 +7,6 @@ import csv
 import argparse
 import numpy as np
 
-NUM_OF_SUBFOLDERS = 10
-ROOT = "/Users/siva/Documents/verisk/sivark/Downloads/LibriSpeech/dev-clean"
-ROOT_SPEAKER_RECOGNITION = "/Users/siva/Documents/speaker_recognition"
-MFCC_FILE_NAME = "mfcc_coefficients.csv"
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--audio_folder",type = str,\
