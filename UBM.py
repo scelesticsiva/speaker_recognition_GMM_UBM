@@ -75,8 +75,10 @@ def train_ubm(args):
     def calculate_likelihood():
         log_likelihood = 0
         for n in range(N):
+            temp = 0
             for k in range(K):
-                log_likelihood += pi_k[k] * (unit_gaussian(data[n],mu_k[k],cov_k[k]))
+                temp += pi_k[k] * (unit_gaussian(data[n],mu_k[k],cov_k[k]))
+            log_likelihood += np.log(temp)
         return log_likelihood
         
         

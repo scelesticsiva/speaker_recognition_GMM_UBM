@@ -8,6 +8,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--map_file_name",type = str,\
                         help = "file after map adaptation",required = True)
+    parser.add_argument("--ubm_file_name",type = str,\
+                        help = "ubm numpy file name",required = True)
     parser.add_argument("--test_csv_file",type = str,\
                         help = "csv file which containes mfcc from test audio",required = True)
     parser.add_argument("--N",type = int,\
@@ -26,6 +28,7 @@ def test(args):
     data = np.zeros((N,D))
     count = 0
     map_adapted = np.load(args.map_file_name).item()
+    ubm = np.load(args.ubm_file_name).item()
     #plt.plot(np.arange(len(map_adapted["likelihood"])),map_adapted["likelihood"])
     #plt.show()
     with open(args.test_csv_file) as csv_file:
@@ -36,10 +39,10 @@ def test(args):
                 if count > N:
                     break
                 data[i-100,:] = each_d
-    mu = map_adapted["mean"]
-    cov = map_adapted["cov"]
-    pi = map_adapted["pi"]
-    print(calculate_likelihood(N,K,data,mu,cov,pi))
+    mu_map,cov_map,pi_map = map_adapted["mean"],map_adapted["cov"],map_adapted["pi"]
+    mu_ubm,cov_ubm,pi_ubm = ubm["mean"],ubm["cov"],ubm["pi"]
+    likelihood_ratio = calculate_likelihood(N,K,data,mu_map,cov_map,pi_map) - calculate_likelihood(N,K,data,mu_ubm,cov_ubm,pi_ubm)
+    print(likelihood_ratio)
     
 if __name__ == "__main__":
     main()
