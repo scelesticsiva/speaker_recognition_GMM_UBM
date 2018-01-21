@@ -11,43 +11,49 @@ import matplotlib.pyplot as plt
 import random
 #K-means
 
-N = 200
-K = 2
+N = 300
+K = 3
 D = 2
+MAX_ITERATIONS = 1000
 
 def distance(point_1,point_2):
-    return np.sqrt(np.mean(point_1 - point_2)**2)
+    return np.mean((point_1 - point_2)**2)
     
 def plot(data,cluster_assignments,centroids):
     plt.figure()
-    plt.scatter(data[cluster_assignments[:,0]==1,0],data[cluster_assignments[:,0]==1,1],c = "r")
-    plt.scatter(data[cluster_assignments[:,1]==1,0],data[cluster_assignments[:,1]==1,1],c = "b")
+    plt.scatter(data[cluster_assignments == 0,0],data[cluster_assignments == 0,1],c = "r")
+    plt.scatter(data[cluster_assignments == 1,0],data[cluster_assignments == 1,1],c = "green")
+    plt.scatter(data[cluster_assignments == 2,0],data[cluster_assignments == 2,1],c = "orange")
     plt.scatter(centroids[:,0],centroids[:,1],c = "y")
     plt.show()
 
-data = np.random.multivariate_normal([3,3],[[1,0],[0,1]],100)
+data = np.random.multivariate_normal([5,5],[[1,0],[0,1]],100)
 data = np.append(data,np.random.multivariate_normal([1,1],[[1,0],[0,1]],100),axis = 0)
+data = np.append(data,np.random.multivariate_normal([-3,-3],[[1,0],[0,1]],100),axis = 0)
 random.shuffle(data)
 plt.scatter(data[:,0],data[:,1])
 
 #initialization
-mean = np.zeros((K,D,D))
-cluster_assignments = np.zeros((N,K))
-centroid_distances = np.zeros((N,K))
-
-centroid_positions = np.random.randint(N+1,size = K)
-centroids = data[centroid_positions]
-print(centroids)
-for i in range(1000):
-    if i%10 == 0:
-        plot(data,cluster_assignments,centroids)
-        print(centroids)
-    for n in range(N):
+for i in range(10):
+    mean = np.zeros((K,D,D))
+    cluster_assignments = np.zeros((N))
+    centroid_distances = np.zeros((N,K))
+    
+    centroid_positions = np.random.randint(N,size = K)
+    centroids = data[centroid_positions]
+    prev_centroids = np.zeros(centroids.shape)
+    print(centroids)
+    itr = 0
+    while not np.array_equal(centroids,prev_centroids) and itr <= MAX_ITERATIONS:
+        for n in range(N):
+            for k in range(K):
+                centroid_distances[n,k] = distance(data[n,:],centroids[k,:])
+            cluster_assignments[n] = np.argmin(centroid_distances[n,:])
+        prev_centroids = centroids[:]
         for k in range(K):
-            centroid_distances[n,k] = distance(data[n],centroids[k])
-        cluster_assignments[n,np.argmin(centroid_distances[n,:])] = 1
-    for k in range(K):
-        centroids[k,:] = np.mean(data[cluster_assignments[:,k] == 1])
+            centroids[k,:] = np.mean(data[cluster_assignments == k])
+        itr += 1
+    plot(data,cluster_assignments,centroids)
                             
 
 
