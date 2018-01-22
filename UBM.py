@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
 from utils import unit_gaussian
+from k_means import k_means
+from scipy.stats import multivariate_normal
 
 def train_ubm(args):
     data = []
@@ -34,9 +36,11 @@ def train_ubm(args):
     likelihood = []
     
     
-    mu_k = np.random.randn(K,D)
-    cov_k = np.array([np.cov(for_cov)]*K)
-    pi_k = np.reshape(np.array([0.5]*K),(K,1))
+    #mu_k = np.random.randn(K,D)
+    #cov_k = np.array([np.cov(for_cov)]*K)
+    #pi_k = np.reshape(np.array([0.5]*K),(K,1))
+    mu_k,cov_k,pi_k = k_means(data,N,K,D,100)
+    cov_k += 0.001*np.eye(cov_k[0].shape[0])
     
     def plot(z_n_k):
         plt.figure()
@@ -62,9 +66,10 @@ def train_ubm(args):
         for i in range(K):
             pi_k[i] = n_k[i]/N
         #print("--pi",pi_k)
-    
+        
     def e_step():
         num = np.zeros((K,1))
+        #print(cov_k)
         for n in range(N):
             for k in range(K):
                 #num[k] = pi_k[k] * (multivariate_normal.pdf(data[n],mu_k[k],cov_k[k]))
@@ -77,6 +82,7 @@ def train_ubm(args):
         for n in range(N):
             temp = 0
             for k in range(K):
+                #temp += pi_k[k] * (multivariate_normal.pdf(data[n],mu_k[k],cov_k[k]))
                 temp += pi_k[k] * (unit_gaussian(data[n],mu_k[k],cov_k[k]))
             log_likelihood += np.log(temp)
         return log_likelihood

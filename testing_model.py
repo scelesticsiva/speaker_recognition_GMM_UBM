@@ -42,6 +42,7 @@ def test(args):
     mu_map,cov_map,pi_map = map_adapted["mean"],map_adapted["cov"],map_adapted["pi"]
     mu_ubm,cov_ubm,pi_ubm = ubm["mean"],ubm["cov"],ubm["pi"]
     likelihood_ratio = calculate_likelihood(N,K,data,mu_map,cov_map,pi_map) - calculate_likelihood(N,K,data,mu_ubm,cov_ubm,pi_ubm)
+    print(calculate_likelihood(N,K,data,mu_map,cov_map,pi_map))
     print(likelihood_ratio)
     
 if __name__ == "__main__":
