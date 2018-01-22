@@ -5,6 +5,11 @@ from utils import unit_gaussian
 from k_means import k_means
 from scipy.stats import multivariate_normal
 
+def special_op(array_1,array_2,D,N):
+    for n in range(N):
+        array_1[:,n] *= array_2[n]
+    return array_1
+
 def train_ubm(args):
     data = []
     N = args.N
@@ -60,7 +65,8 @@ def train_ubm(args):
         #print("--mu",mu_k)
         for i in range(K):
             #temp_1 = np.zeros((D,D))
-            cov_k[i] = np.dot(np.dot((data - mu_k[i,:]).T, np.diag(z_n_k[:,i])), (data-mu_k[i])) / n_k[i]
+            #cov_k[i] = np.dot(np.dot((data - mu_k[i,:]).T, np.diag(z_n_k[:,i])), (data-mu_k[i])) / n_k[i]
+            cov_k[i] = np.dot(special_op((data - mu_k[i,:]).T,(z_n_k[:,i]),D,N), (data-mu_k[i])) / n_k[i]
             cov_k[i] = cov_k[i] + 0.001*np.eye(cov_k[i].shape[0])
         #print("--cov",cov_k)
         for i in range(K):
