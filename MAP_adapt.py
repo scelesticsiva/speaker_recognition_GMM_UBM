@@ -1,4 +1,4 @@
-import numpy as np
+lsimport numpy as np
 import csv
 from utils import unit_gaussian
 
