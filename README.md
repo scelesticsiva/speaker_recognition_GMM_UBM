@@ -2,14 +2,14 @@
 A speaker recognition system which uses GMM-UBM for use in an Android application which helps in monitoring patients suffering from Schizophrenia.
 
 To run UBM training run the following code,
-```python
+```
 python3 speaker_recognition.py 
 --csv_file <path to MFCC coefficients file> 
 --operation ubm
 ```
 
 To run MAP adaptation,
-```python
+```
 python3 speaker_recognition.py 
 --csv_file <path to MFCC coefficients file> 
 --operation map 
