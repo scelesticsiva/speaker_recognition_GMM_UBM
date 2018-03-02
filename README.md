@@ -18,7 +18,7 @@ python3 speaker_recognition.py
 --csv_file <path to MFCC coefficients file> 
 --operation ubm
 ```
-###Map adaptation using the created GMM-UBM model
+### Map adaptation using the created GMM-UBM model
 - - -
 To run MAP adaptation,
 ```
