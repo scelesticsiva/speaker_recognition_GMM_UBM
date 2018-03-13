@@ -27,3 +27,11 @@ python3 speaker_recognition.py
 --operation map 
 --ubm_file <path to the ubm file created after GMM-UBM model creation>
 ```
+For testing the map adapted model,
+```
+python3 testing_model.py
+--map_file_name <path to map adapted .npy file>
+--ubm_file_name <path to ubm .npy file>
+--test_csv_file <path to the csv file of test speaker>
+--N 1500
+```
