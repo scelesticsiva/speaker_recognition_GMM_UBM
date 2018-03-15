@@ -18,7 +18,7 @@ import scipy.io.wavfile as wav
 #from scipy.stats import mode
 
 
-ROOT_FOLDER = "/Users/siva/Documents/speaker_recognition/datasets/testing_voice_noise/"
+ROOT_FOLDER = "/Users/siva/Documents/speaker_recognition/datasets/musan/seperate_audio/"
 FRAME_LENGTH = 25 #ms
 WINDOW_LENGTH = 5 #s
 
@@ -59,7 +59,7 @@ def create_dataset():
     values = dataset_dict.values()
     print([len(e) for e in values])
     print("finished")
-    np.save("chunked_audio_testing_dataset.npy",dataset_dict)
+    np.save("voice_activity_detection_mar_15.npy",dataset_dict)
                 
 if __name__ == "__main__":
     create_dataset()

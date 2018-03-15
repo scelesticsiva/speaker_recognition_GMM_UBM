@@ -30,11 +30,12 @@ class extract_features(object):
         samples_per_frame = int((self.frame_length*(10**-3))*self.sampling_rate)
         frame_increment = int((self.frame_step*(10**-3))*self.sampling_rate)
         index = 0
-        while index < len(self.window):
+        #temp_count = 0
+        while index <= len(self.window):
             if len(self.window[index:index+samples_per_frame]) == samples_per_frame:
                 self.frames.append(self.window[index:index+samples_per_frame])
             index += frame_increment
-        #print(len(self.frames))
+        #print(temp_count)
     def ZCR(self):
         dummy_1 = copy.deepcopy(self.window)
         dummy_2 = copy.deepcopy(self.window)
@@ -63,10 +64,12 @@ class extract_features(object):
         self.frames_freq_bins = []
         self.frames_phase_angle_bins = []
         for each_frame in self.frames:
-            fft_ = np.fft.fft(each_frame)
+            #fft_ = np.fft.fft(each_frame)
+            fft_ = np.fft.fft(each_frame,n = 512)
             fft_frame = np.absolute(fft_)
             phase_angle = np.angle(fft_,deg = True)[1:]
-            frames_freq = np.fft.fftfreq(len(each_frame),d = (1/self.sampling_rate))[1:]
+            #frames_freq = np.fft.fftfreq(len(each_frame),d = (1/self.sampling_rate))[1:]
+            frames_freq = np.fft.fftfreq(512,d = (1/self.sampling_rate))[1:]
             fft_frame_normalised = fft_frame[1:][frames_freq>0]/(np.sum(abs(fft_frame[1:][frames_freq>0])))
             self.frames_fft_normalised.append(fft_frame_normalised)
             self.frames_freq_bins.append(frames_freq[frames_freq>0])
