@@ -34,16 +34,16 @@ def test(args):
     with open(args.test_csv_file) as csv_file:
         csv_reader = csv.reader(csv_file)
         for i,each_d in enumerate(csv_reader):
-            if i >= 0:
+            if i >= 1:
                 count += 1
                 if count > N:
                     break
-                data[i-0,:] = each_d
+                data[i-1,:] = each_d
     mu_map,cov_map,pi_map = map_adapted["mean"],map_adapted["cov"],map_adapted["pi"]
     mu_ubm,cov_ubm,pi_ubm = ubm["mean"],ubm["cov"],ubm["pi"]
     likelihood_ratio = calculate_likelihood(N,K,data,mu_map,cov_map,pi_map) - calculate_likelihood(N,K,data,mu_ubm,cov_ubm,pi_ubm)
     print(calculate_likelihood(N,K,data,mu_map,cov_map,pi_map))
-    print(likelihood_ratio)
+#print(likelihood_ratio)
     
 if __name__ == "__main__":
     main()

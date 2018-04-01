@@ -29,8 +29,8 @@ def extract_mfcc(args):
     for each_file in audio_files:
         file_name_list = each_file.split(".")
         if file_name_list[-1] == args.audio_format:
-            #subprocess.run("sox {0}.{1} -r 16000 {2}_16.wav".format(file_name_list[0],file_name_list[-1],file_name_list[0]).split())
-            subprocess.run("ffmpeg -i {0}.{1} {2}_16.wav -ar 16000".format(file_name_list[0],file_name_list[-1],file_name_list[0]).split())
+            subprocess.run("sox {0}.{1} -r 16000 {2}_16.wav".format(file_name_list[0],file_name_list[-1],file_name_list[0]).split())
+            #subprocess.run("ffmpeg -i {0}.{1} {2}_16.wav -ar 16000".format(file_name_list[0],file_name_list[-1],file_name_list[0]).split())
             subprocess.run("rm {0}.{1}".format(file_name_list[0],file_name_list[-1]).split())
             (rate,sig) = wav.read(file_name_list[0]+"_16.wav")
             mfcc_feat = mfcc(sig,rate)
