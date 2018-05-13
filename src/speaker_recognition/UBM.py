@@ -1,4 +1,9 @@
-import matplotlib.pyplot as plt
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jan 20 23:12:30 2018
+@author: siva
+"""
 import numpy as np
 import csv
 from utils import unit_gaussian
