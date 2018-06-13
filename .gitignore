@@ -1,5 +1,3 @@
-__pycache__
-.idea/modules.xml
-.idea/speaker_recognition_GMM_UBM.iml
-.idea/vcs.xml
-.idea/workspace.xml
+__pycache__/
+.idea/
+.ipynb_checkpoints/
